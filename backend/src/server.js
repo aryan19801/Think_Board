@@ -2,17 +2,23 @@ import express from "express";
 import notesRotes from "./routes/noteRouter.js";
 import connectDb from "./lib/db.js";
 import path from 'path';
+import { fileURLToPath } from "url";
 const app = express()
 const PORT = 8000
 
-const __dirname=path.resolve();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 app.use("/api/notes", notesRotes);
 
-if(process.env.NODE_URI==="production"){
-    app.use(express.static(path.join(__dirname,"../frontend/dist")))
-    app.get("*",(req,res)=>{
-        res.sendFile(path.join(__dirname,"../frontend","dist","index.html"));
-    })
+if(process.env.NODE_ENV==="production"){
+   const pathToFrontendDist = path.join(__dirname, '..', '..', 'frontend', 'dist');
+
+    app.use(express.static(pathToFrontendDist));
+
+    app.get("*", (req, res) => {
+        res.sendFile(path.join(pathToFrontendDist, "index.html"));
+    });
 }
 
 app.listen(PORT, ()=>{
