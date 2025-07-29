@@ -22,7 +22,7 @@ export async function createNote(req,res){
 }
 export async function deleteNote(req,res){
     try { const deletedNote = await Note.findByIdAndDelete(req.params.id);
-        if(!deleteNote) return res.status(404).json({message:"Note not found"});
+        if(!deletedNote) return res.status(404).json({message:"Note not found"});
         res.status(200).json({message:"Note deleted successfully !"})
     } catch (error) {
         console.log("Error in deleteNote controller", error);
@@ -40,6 +40,8 @@ export async function updateNote(req,res){
     }
 }
 export async function getNoteById(req,res){
+    console.log("Fetching note with ID:", req.params.id);
+
     try { const note = await Note.findById(req.params.id);
           if(!note) return res.status(404).json({message : "Note not found!"});
         res.json(note);

@@ -4,14 +4,20 @@ import connectDb from "./lib/db.js";
 import path from 'path';
 import { fileURLToPath } from "url";
 import rateLimiter from "./middleware/rateLimiter.js";
+import cors from "cors";
 const app = express()
 const PORT = process.env.PORT || 5001;
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+app.use(cors({
+    origin:"http://localhost:5173",
+}));
+
 app.use(express.json());
-app.use(rateLimiter)
+app.use(rateLimiter);
+
 
 app.use("/api/notes", notesRotes);
 
