@@ -3,7 +3,7 @@ import notesRotes from "./routes/noteRouter.js";
 import connectDb from "./lib/db.js";
 import path from 'path';
 import { fileURLToPath } from "url";
-import rateLimiter from "./middleware/rateLimiter.js";
+// import rateLimiter from "./middleware/rateLimiter.js";
 import cors from "cors";
 const app = express()
 const PORT = process.env.PORT || 5001;
