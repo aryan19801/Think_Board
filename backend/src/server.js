@@ -13,10 +13,11 @@ const __dirname = path.dirname(__filename);
 
 app.use(cors({
     origin:"http://localhost:5173",
+    credentials:true
 }));
 
 app.use(express.json());
-app.use(rateLimiter);
+// app.use(rateLimiter);
 
 
 app.use("/api/notes", notesRotes);
@@ -24,6 +25,7 @@ app.use("/api/notes", notesRotes);
 if(process.env.NODE_ENV==="production"){
    const pathToFrontendDist = path.join(__dirname, '..', '..', 'frontend', 'dist');
 
+   console.log("Serving frontend from: ", pathToFrontendDist);
     app.use(express.static(pathToFrontendDist));
 
     app.get("*", (req, res) => {
@@ -34,7 +36,6 @@ if(process.env.NODE_ENV==="production"){
  connectDb().then(
     ()=>{
     app.listen(PORT, ()=>{
-   
     console.log(`Server is running at : ${PORT} `);
 })
     }
