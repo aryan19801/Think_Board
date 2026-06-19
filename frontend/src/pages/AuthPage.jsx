@@ -2,8 +2,9 @@ import { useState } from "react";
 import { Mail, Lock, User, UserCircle } from "lucide-react";
 import { toast } from "react-hot-toast";
 import api from "../lib/axios";
+import { useNavigate } from "react-router";
 
-export default function AuthPage() {
+export default function AuthPage({setUser}) {
   const [isLogin, setIsLogin] = useState(true);
 
   const [formData, setFormData] = useState({
@@ -12,6 +13,7 @@ export default function AuthPage() {
     email: "",
     password: "",
   });
+  const Navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
 
@@ -42,6 +44,19 @@ export default function AuthPage() {
       toast.success(data.message);
 
       console.log("User:", data.user);
+     
+      if(!isLogin){
+        setIsLogin(false);
+        setFormData({
+          firstName: "",
+          lastName: "", password: "", email: "",
+        });
+      }
+      else{
+        setUser(data.user)
+        Navigate("/")
+      }
+      
 
       // Navigate to dashboard here
       // navigate("/");
