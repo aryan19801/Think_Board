@@ -9,6 +9,11 @@ import mongoose from "mongoose";
             type : String,
             reuired : true,
         },
+        userId : {
+            type : mongoose.Schema.Types.ObjectId,
+            ref : "User",
+            required : true,
+        }
 
     },
     {timestamps:true}
